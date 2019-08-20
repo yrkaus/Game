@@ -1,138 +1,138 @@
 ﻿using System;
-using System.Collections.Generic;
-// создать класс, добавить таблицу, добавить игрока, вівести результат, сохранить результат.
-// + придумать свою игру, придумати правила гри, напитсати блок схему, яка логіка, написати діаграму класів і варіанти використання програми, описати як користувач буде взаємодіяти з ціє грою. 
 
 
-namespace Lecture7
+namespace ConsoleApp8
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Deck deck = new Deck();
-            deck.MixCards();
-            _ = new Gamer();            // Таблица игроков
-
-            while (true)
+        startGame:
+            try
             {
-                Console.Write("Введите имя игрока: ");
-                var name = Console.ReadLine();
-                int cardSum = 0;
+                Console.WriteLine("\n Добро пожаловать в Игру Кости!\n");
 
-                if (name.Length == 0)
+            enterpleyer:
+                Console.WriteLine("\n Введите количество игроков: \n");
+                int geymers = Convert.ToInt32(Console.ReadLine());
+                int geymers2 = geymers;
+                if (geymers > 1)
                 {
-                    break;
+                    int i = geymers2;
+                    //int s = 1;
+                    //int x = 50;
+
+                    for (int p = 1; p < i + 1; p++)
+                    {
+                    start:
+                        Console.WriteLine("Введите имя огрока, и нажмите Enter:");
+                        string name = Console.ReadLine();
+                        if (name.Length > 0)
+                        {
+                            Console.WriteLine("\nУважаемый {0}! Вы успешно зарегистрированы\n", name);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Вы не ввели имени");
+                            goto start;
+                        }
+                    }
                 }
                 else
                 {
-                    Console.WriteLine(name);// добавить игрока
-                    Console.WriteLine("Игрок успешно зарегестрирован!");
-                    Console.WriteLine(name);
+                    Console.WriteLine("Минимальное количество Игроков 2");
+                    goto enterpleyer;
                 }
+                Console.WriteLine("Бросаете кости? Если да, нажмите YES, если нет, нажмите NO");
+                string yesno = Console.ReadLine();
 
-                while (true)
+            CoubeCust:
+                if (yesno == "YES")
                 {
-                    Console.WriteLine("Хочешь взять карту?\nЕсли да, то напиши Yes, если нет, то напиши No");
-
-                    if (Console.ReadLine() == "Yes")
+                    int i = geymers2;
+                    for (int p = 1; p < i + 1; p++)
                     {
-                        Card card = deck.GetCard();
-                        cardSum += card.value;
-
-                        if (cardSum > 21)
-                        {
-                            Console.WriteLine(cardSum);// Сохранить результат
-                            break;
-                        }
+                        Coube Cast = new Coube();
+                        Cast.MethodCast();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n Лучше выбирите YES\n");
+                    string yes = Console.ReadLine();
+                    if (yes == "YES")
+                    {
+                        goto CoubeCust;
                     }
                     else
                     {
-                        Console.WriteLine(cardSum);// Сохранить результат
-                        break;
+                        Console.WriteLine("В этой игре надо бросать кубики!");
+                        goto TheEnd;
                     }
                 }
+            TheEnd:
+                Console.WriteLine("\n Спасибо за участие в Игре Кости \n");
             }
-            int cardSum2 = 0;
-            Console.WriteLine(Console.ReadLine(), "Получил баллов: ", cardSum2);// вывод результатов
-        }
-    }
-
-    public class Gamer // Класс игрок
-    {
-        public string Name;
-        public int cardSum;
-
-        public Gamer()
-        {
-        }
-
-        /*        public Gamer(int cardSum, string Name)
-                {
-                    this.cardSum = cardSum;
-                    this.Name = Name;
-                    Console.WriteLine(Name, cardSum);
-        */
-    }
-}
-
-
-public class Card
-{
-    public int value;
-    public string name;
-    public string suit;
-
-    public Card(int value, string name, string suit)
-    {
-        this.value = value;
-        this.name = name;
-        this.suit = suit;
-    }
-}
-
-public class Deck
-{
-    private string[] _suits = new string[] { "Bubna", "Chirva", "Crest", "Pika" };
-    public List<Card> cards;
-
-    public Deck()
-    {
-        cards = new List<Card>();
-
-        for (int j = 0; j < _suits.Length; j++)
-        {
-            for (int i = 2; i <= 10; i++)
+            catch
             {
-                Card card = new Card(i, i.ToString(), _suits[j]);
-                cards.Add(card);
+                Console.WriteLine("\n Об этом мы не подумали. Пропробуйте еще! \n");
+                goto startGame;
             }
         }
-    }
-
-    public Card GetCard()
-    {
-        Random random = new Random();
-        int index = random.Next(0, cards.Count);
-        return cards[index];
-    }
-
-    public void MixCards()
-    {
-        Random random = new Random();
-        int length = random.Next();
-
-        for (int i = 0; i < 100; i++)
+        public class Coube
         {
-            random = new Random();
-            int index1 = random.Next(0, cards.Count);
-            random = new Random();
-            int index2 = random.Next(0, cards.Count);
+            string name = Console.ReadLine();
+            public void MethodCast()
+            {
+                Console.WriteLine("{0} Бросайte кубики:", name);
+                Random random = new Random();
+                int coube = random.Next(1, 6);
+                Console.WriteLine("Результат кубика 1: {0}", coube);
 
-            Card temp = cards[index2];
-            cards[index2] = cards[index1];
-            cards[index1] = temp;
+                Random random2 = new Random();
+                int coube2 = random2.Next(1, 6);
+                Console.WriteLine("Результат кубика 2: {0}", coube2);
+                int summ = coube + coube2;
+                Console.WriteLine("Сумма брошенных кубиков: {0}+{1} = {2}", coube, coube2, summ);
+            }
         }
     }
 }
 
+
+//    }
+//public class Geymer
+//{
+//    public void MethodGeymer()
+//    {
+//        Console.WriteLine("Введите имя огрока: ");
+//        string name2 = Console.ReadLine();
+//        if (name2.Length > 0)
+//        {
+//            Console.WriteLine("Вы успешно зарегистрированы");
+//        }
+//        else
+//        {
+//            Console.WriteLine("Повторите регистрацию");
+//        }
+//    }
+
+
+
+//}
+
+
+
+//    {
+//        return;
+//    }
+
+//    while (geymers > 49)
+//    {
+//        Console.WriteLine("Извините, Максимальное количество игроков: 50!");
+//    }
+//}
+//while (geymers > 1)
+//{
+//    Console.WriteLine("Извините, Минимальное количетсво игроков: 2!");
+//}
